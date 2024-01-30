@@ -1,0 +1,135 @@
+﻿@page
+@model WebApplication3.Pages.RegisterModel
+@{
+}
+
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			<h1 class="mb-3">Register </h1>
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					var passwordInput = document.getElementById("password");
+					passwordInput.addEventListener("input", checkPasswordStrength);
+				});
+
+				function checkPasswordStrength() {
+					var password = document.getElementById("password").value;
+					var strengthElement = document.getElementById("password-strength");
+
+					var minLength = 12;
+					var hasUpperCase = /[A-Z]/.test(password);
+					var hasLowerCase = /[a-z]/.test(password);
+					var hasDigit = /\d/.test(password);
+					var hasSpecialChar = /[!@@#$%^&*(),.?":{}|<>]/.test(password);
+
+					var strength = 0;
+					if (password.length >= minLength) strength++;
+					if (hasUpperCase) strength++;
+					if (hasLowerCase) strength++;
+					if (hasDigit) strength++;
+					if (hasSpecialChar) strength++;
+
+					if (strength === 0) {
+						strengthElement.innerHTML = "";
+					} else if (strength <= 2) {
+						strengthElement.innerHTML = "Weak";
+						strengthElement.style.color = "red";
+					} else if (strength <= 4) {
+						strengthElement.innerHTML = "Moderate";
+						strengthElement.style.color = "orange";
+					} else {
+						strengthElement.innerHTML = "Strong";
+						strengthElement.style.color = "green";
+					}
+				}
+			</script>
+
+			<form method="post" enctype="multipart/form-data" >
+				@Html.AntiForgeryToken()
+				<div class="mb-3">
+					<div style="display: flex; gap: 20px;">
+						<div style="flex: 1;">
+							<label class="form-label" asp-for="RModel.FirstName">First Name</label>
+							@Html.HiddenFor(model => model.RModel.FirstName, new { @class = "form-control" })
+							<input type="" asp-for="RModel.FirstName" class="form-control" />
+							<span asp-validation-for="RModel.FirstName" class="text-danger"></span>
+						</div>
+						<div style="flex: 1;">
+							<label class="form-label" asp-for="RModel.LastName">Last Name</label>
+							@Html.HiddenFor(model => model.RModel.LastName, new { @class = "form-control" })
+							<input type="text" asp-for="RModel.LastName" class="form-control" />
+							<span asp-validation-for="RModel.LastName" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Gender">Gender</label>
+					<select asp-for="RModel.Gender" class="form-control">
+						<option value="0">Male</option>
+						<option value="1">Female</option>
+						<option value="2">Other</option>
+					</select>
+					<span asp-validation-for="RModel.Gender" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.NRIC">NRIC</label>
+					@Html.HiddenFor(model => model.RModel.NRIC, new { @class = "form-control" })
+					<input type="Text" asp-for="RModel.NRIC" class="form-control" />
+					<span asp-validation-for="RModel.NRIC" class="text-danger"></span>
+				</div>
+				
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Email">Email Address</label>
+					@Html.HiddenFor(model => model.RModel.Email, new { @class = "form-control" })
+					<input type="email" asp-for="RModel.Email" class="form-control" />
+					<span asp-validation-for="RModel.Email" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Password">Password</label>
+					@Html.HiddenFor(model => model.RModel.Password, new { @class = "form-control" })
+					<input type="password" id="password" asp-for="RModel.Password" class="form-control" />
+					<span asp-validation-for="RModel.Password" class="text-danger"></span>
+					<span id="password-strength" style="margin-top: 5px;"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
+					@Html.HiddenFor(model => model.RModel.ConfirmPassword, new { @class = "form-control" })
+					<input type="password" asp-for="RModel.ConfirmPassword" class="form-control" />
+					<span asp-validation-for="RModel.ConfirmPassword" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.DateOfBirth">DateOfBirth</label>
+					@Html.HiddenFor(model => model.RModel.DateOfBirth, new { @class = "form-control" })
+					<input type="date" asp-for="RModel.DateOfBirth" class="form-control" />
+					<span asp-validation-for="RModel.DateOfBirth" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Resume">Resume (.docx or .pdf file)</label>
+					<input type="file" asp-for="RModel.Resume" class="form-control" />
+					<span asp-validation-for="RModel.Resume" class="text-danger"></span>
+				</div>
+				<input type="hidden" asp-for="RModel.ResumeFilePath" id="ResumeFilePath" />
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.WhoAmI">Who am I?</label>
+					@Html.HiddenFor(model => model.RModel.WhoAmI, new { @class = "form-control" })
+					<textarea asp-for="RModel.WhoAmI" class="form-control"></textarea>
+					<span asp-validation-for="RModel.WhoAmI" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Register</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

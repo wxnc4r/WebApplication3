@@ -1,0 +1,55 @@
+﻿@page
+@model WebApplication3.Pages.LoginModel
+@{
+}
+<script src="https://www.google.com/recaptcha/api.js"></script>
+ <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
+
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			<h1 class="mb-3">Login </h1>
+			@if (Model.ModelState.ErrorCount > 0)
+			{
+				<div class="alert alert-danger">
+					@foreach (var modelState in Model.ModelState.Values)
+					{
+						foreach (var error in modelState.Errors)
+						{
+							<p>@error.ErrorMessage</p>
+						}
+					}
+				</div>
+			}
+
+			<form method="post" id="a">
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="LModel.Email">Email Address</label>
+					<input type="Text" asp-for="LModel.Email" class="form-control" />
+					<span asp-validation-for="LModel.Email" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="LModel.Password">Password</label>
+					<input type="password" asp-for="LModel.Password" class="form-control" />
+					<span asp-validation-for="LModel.Password" class="text-danger"></span>
+					@if (Model.ModelState.TryGetValue("LModel.Password", out var passwordError) && passwordError.Errors.Count > 0)
+					{
+						<span class="text-danger">@passwordError.Errors[0].ErrorMessage</span>
+					}
+				</div>
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

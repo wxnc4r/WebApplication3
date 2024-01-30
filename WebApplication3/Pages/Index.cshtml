@@ -1,0 +1,14 @@
+﻿@page
+@model WebApplication3.Pages.IndexModel
+@inject IHttpContextAccessor contxt
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome @ViewData["Name"], NRIC : @ViewData["NRIC"]</h1>
+    <h3>Your Email : @ViewData["Email"]    Your Gender : @ViewData["Gender"]</h3>
+    <h2>About you : @ViewData["AboutYou"]</h2>
+    <h2>Date of birth : @ViewData["DOB"]</h2>
+    <p>Your Resume File Path: @ViewData["ResumeFilePath"]</p>
+</div>
